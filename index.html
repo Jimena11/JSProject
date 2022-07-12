@@ -9,10 +9,7 @@
       content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
     />
     <meta name="generator" content="Hugo 0.88.1" />
-    <meta
-      name="keywords"
-      content="voluntariado,voluntario,ong,ambiente,ods,colaboración,participar,empresas"
-    />
+    <meta name="keywords" content="Cuotas, Inflación, Contado" />
     <meta name="description" content="Coutas?" />
 
     <title>Cuotas o Contado?</title>
@@ -38,7 +35,7 @@
           <h4>
             Decidí cual es tu mejor opción para pagar eso que tanto queres.
           </h4>
-          <form>
+          <form id="formulario">
             <div class="mb-3">
               <label for="precioContado" class="form-label"
                 >Precio de contado</label
@@ -87,8 +84,13 @@
                 <option value="24">24</option>
               </select>
             </div>
+            <div id="errores"></div>
             <div class="d-grid">
-              <button type="submit" class="btn btn-primary">
+              <button
+                id="btnVerMejorOpcion"
+                type="submit"
+                class="btn btn-primary"
+              >
                 Ver mejor opción
               </button>
             </div>
