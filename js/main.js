@@ -1,3 +1,17 @@
+let precioContadoInput = document.getElementById("precioContado");
+let precioCuotasInput = document.getElementById("precioCuotas");
+let inflacionEstimadaInput = document.getElementById("inflacionEstimada");
+let cantidadCuotasInput = document.getElementById("cantidadCuotas");
+
+const valoresFormulario = JSON.parse(
+  localStorage.getItem("valores-formulario")
+);
+
+precioContadoInput.value = valoresFormulario.precioContado;
+precioCuotasInput.value = valoresFormulario.precioCuotas;
+inflacionEstimadaInput.value = valoresFormulario.inflacion;
+cantidadCuotasInput.value = valoresFormulario.cantidadCuotas;
+
 const calcular = () => {
   const entradas = {
     precioContado: parseFloat(prompt("Ingresar el precio de contado")),
@@ -58,26 +72,54 @@ miFormulario.addEventListener("submit", validarFormulario);
 
 function validarFormulario(e) {
   e.preventDefault();
-  let formulario = e.target;
-  const errores = [];
-  let precioContadoInput = document.getElementById("precioContado");
-  let erroresDiv = document.getElementById("errores");
-  if (precioContadoInput.value === "") {
-    errores.push("El precio contado es un valor obligatorio");
-  }
+  mostrarCargando();
 
-  errores.forEach((error) => {
-    const errorDiv = document.createElement("p");
-    errorDiv.innerHTML = error;
-    erroresDiv.appendChild(errorDiv);
-  });
-  console.log(errores);
-  console.log("submit");
+  setTimeout(() => {
+    let formulario = e.target;
+    const errores = [];
+
+    const valoresFormulario = {
+      precioContado: precioContadoInput.value,
+      precioCuotas: precioCuotasInput.value,
+      inflacion: inflacionEstimadaInput.value,
+      cantidadCuotas: cantidadCuotasInput.value,
+    };
+
+    localStorage.setItem(
+      "valores-formulario",
+      JSON.stringify(valoresFormulario)
+    );
+
+    let erroresDiv = document.getElementById("errores");
+    erroresDiv.innerHTML = "";
+
+    if (precioContadoInput.value === "") {
+      errores.push("El precio contado es un valor obligatorio");
+    }
+
+    if (precioCuotasInput.value === "") {
+      errores.push("El precio cuotas es un valor obligatorio");
+    }
+
+    errores.forEach((error) => {
+      const errorDiv = document.createElement("p");
+      errorDiv.innerHTML = error;
+      erroresDiv.appendChild(errorDiv);
+    });
+
+    mostrarBotonNormal();
+  }, 2000);
 }
 
 let btnVerMejorOpcion = document.getElementById("btnVerMejorOpcion");
 btnVerMejorOpcion.addEventListener("click", mostrarCargando);
 
-function mostrarCargando(e) {
-  e.target.innerHTML = "Calculando mejor opción...";
+function mostrarCargando() {
+  const botonCargando = document.getElementById("btnVerMejorOpcion");
+  botonCargando.innerHTML = "Calculando mejor opción...";
+}
+
+function mostrarBotonNormal() {
+  const botonCargando = document.getElementById("btnVerMejorOpcion");
+  botonCargando.innerHTML = "Ver mejor opción";
 }
